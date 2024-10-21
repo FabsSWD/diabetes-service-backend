@@ -1,4 +1,4 @@
-# Diabetes Management Service
+# Diabetes App Service Backend
 
 ## Project Description
 
