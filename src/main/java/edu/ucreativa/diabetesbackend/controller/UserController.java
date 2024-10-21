@@ -22,4 +22,21 @@ public class UserController {
     public boolean validate(@RequestParam String username, @RequestParam String password) {
         return userService.validateUserPassword(username, password);
     }
+
+    @GetMapping("/exists")
+    public boolean userExists(@RequestParam String username) {
+        return userService.userExists(username);
+    }
+
+    @PutMapping("/update-password")
+    public String updatePassword(@RequestParam String username, @RequestParam String newPassword) {
+        boolean updated = userService.updateUserPassword(username, newPassword);
+        return updated ? "Password updated successfully" : "User not found";
+    }
+
+    @DeleteMapping("/delete")
+    public String deleteUser(@RequestParam String username, @RequestParam String password) {
+        boolean deleted = userService.deleteUser(username, password);
+        return deleted ? "User deleted successfully" : "Invalid username or password";
+    }
 }
