@@ -17,4 +17,9 @@ public class UserController {
         userService.saveUser(user);
         return "New user created";
     }
+
+    @PostMapping("/validate")
+    public boolean validate(@RequestParam String username, @RequestParam String password) {
+        return userService.validateUserPassword(username, password);
+    }
 }
