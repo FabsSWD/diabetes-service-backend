@@ -156,6 +156,3 @@ The project uses **BCryptPasswordEncoder** to secure passwords. The encoder is d
 ## License
 
 This project is under the **MIT License**. You are free to use it for personal and commercial purposes.
-
-## Contact
-For more information, you can contact the lead developer of the project.
