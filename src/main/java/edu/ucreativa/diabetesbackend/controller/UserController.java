@@ -40,3 +40,35 @@ public class UserController {
         return deleted ? "User deleted successfully" : "Invalid username or password";
     }
 }
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    private MLClient mlClient = new MLClient();  // Instancia del cliente de ML
+
+    // Endpoint para realizar la predicción
+    @PostMapping("/predict")
+    public ResponseEntity<String> getPrediction(@RequestBody Map<String, Object> input) {
+        try {
+            // Convertir el input a JSON
+            String inputJson = new ObjectMapper().writeValueAsString(input);
+
+            // Invocar el modelo a través del cliente
+            String prediction = mlClient.predict(inputJson);
+
+            // Retornar la respuesta de la predicción
+            return ResponseEntity.ok(prediction);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al procesar la predicción");
+        }
+    }
+}
