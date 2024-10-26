@@ -2,11 +2,10 @@ package edu.ucreativa.diabetesbackend.controller;
 
 import edu.ucreativa.diabetesbackend.service.UserService;
 import edu.ucreativa.diabetesbackend.model.User;
+import edu.ucreativa.diabetesbackend.dto.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -23,7 +22,9 @@ public class UserController {
     }
 
     @PostMapping("/validate")
-    public boolean validate(@RequestParam String username, @RequestParam String password) {
+    public boolean validate(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
         return userService.validateUserPassword(username, password);
     }
 
@@ -33,9 +34,9 @@ public class UserController {
     }
 
     @PutMapping("/update-password")
-    public String updatePassword(@RequestParam String username, @RequestParam String newPassword) {
-        boolean updated = userService.updateUserPassword(username, newPassword);
-        return updated ? "Password updated successfully" : "User not found";
+    public ResponseEntity<Boolean> updatePassword(@RequestParam String username, @RequestParam String newPassword) {
+        boolean isUpdated = userService.updatePassword(username, newPassword);
+        return ResponseEntity.ok(isUpdated);
     }
 
     @DeleteMapping("/delete")
