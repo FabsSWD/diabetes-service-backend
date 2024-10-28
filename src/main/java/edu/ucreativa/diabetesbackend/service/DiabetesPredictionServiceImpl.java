@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiabetesPredictionServiceImpl implements DiabetesPredictionService {
@@ -17,7 +19,7 @@ public class DiabetesPredictionServiceImpl implements DiabetesPredictionService 
     @Autowired
     private DiabetesPredictionRepository predictionRepository;
 
-    private static final String PREDICTION_API_URL = "http://localhost:5000/predict"; // URL de la API de Python
+    private static final String PREDICTION_API_URL = "http://localhost:5000/predict";
 
     @Override
     public DiabetesPrediction savePrediction(DiabetesPrediction prediction) {
@@ -58,5 +60,21 @@ public class DiabetesPredictionServiceImpl implements DiabetesPredictionService 
             e.printStackTrace();
             throw new RuntimeException("Error calling prediction API", e);
         }
+    }
+
+    @Override
+    public List<DiabetesPrediction> getPredictionsByUser(String username) {
+        return predictionRepository.findAll()
+                .stream()
+                .filter(prediction -> prediction.getPostedBy().equals(username))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DiabetesPrediction> getPublicPredictions() {
+        return predictionRepository.findAll()
+                .stream()
+                .filter(DiabetesPrediction::isPublic)
+                .collect(Collectors.toList());
     }
 }

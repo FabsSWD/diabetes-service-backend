@@ -5,6 +5,7 @@ import edu.ucreativa.diabetesbackend.service.DiabetesPredictionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/prediction")
@@ -23,5 +24,19 @@ public class DiabetesPredictionController {
         // Guardar la predicción en la base de datos
         DiabetesPrediction savedPrediction = predictionService.savePrediction(prediction);
         return ResponseEntity.ok(savedPrediction);
+    }
+
+    // Endpoint para obtener todas las predicciones de un usuario
+    @GetMapping("/user")
+    public ResponseEntity<List<DiabetesPrediction>> getUserPredictions(@RequestParam String username) {
+        List<DiabetesPrediction> predictions = predictionService.getPredictionsByUser(username);
+        return ResponseEntity.ok(predictions);
+    }
+
+    // Endpoint para obtener todas las predicciones públicas
+    @GetMapping("/public")
+    public ResponseEntity<List<DiabetesPrediction>> getPublicPredictions() {
+        List<DiabetesPrediction> publicPredictions = predictionService.getPublicPredictions();
+        return ResponseEntity.ok(publicPredictions);
     }
 }

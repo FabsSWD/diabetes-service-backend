@@ -1,5 +1,6 @@
 package edu.ucreativa.diabetesbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,7 @@ public class DiabetesPrediction {
     private Long id;
 
     @Column(nullable = false)
-    private String postedBy; // Nombre del usuario que publicó la predicción
+    private String postedBy;
 
     private int pregnancies;
     private int glucose;
@@ -29,8 +30,9 @@ public class DiabetesPrediction {
     private int age;
 
     @Column(nullable = false)
-    private boolean diabetes; // Resultado de la predicción (true para diabetes, false para no diabetes)
+    private boolean diabetes;
 
-    @Column(nullable = false)
-    private boolean isPublic; // Indica si la predicción es pública o privada
+    @Column(name = "is_public", nullable = false)
+    @JsonProperty("isPublic")
+    private boolean isPublic; // Asegúrate de que el nombre de la columna esté especificado aquí
 }
