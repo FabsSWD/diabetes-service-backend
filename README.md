@@ -1,5 +1,11 @@
 # Diabetes App Service Backend
 
+## Index
+
+- [Frontend](https://github.com/FabsSWD/diabetes-app-frontend)
+- [Backend](https://github.com/FabsSWD/diabetes-service-backend)
+- [AI API](https://github.com/FabsSWD/diabetes-ml)
+
 ## Project Description
 
 This project is a REST API for user management developed using **Spring Boot**. It offers services for creating, validating, updating, and deleting users, ensuring information security by encrypting passwords with **BCryptPasswordEncoder**.
